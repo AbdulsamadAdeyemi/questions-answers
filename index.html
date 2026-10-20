@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CBT Practice - Nigerian UTME Practice Examination Engine</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="Q&A.CSS">
+</head>
+<body class="h-full text-slate-800 font-sans antialiased flex flex-col select-none">
+
+  <!-- ========================================== -->
+  <!-- SCREEN 1: LOGIN / WELCOME SCREEN          -->
+  <!-- ========================================== -->
+  <div id="screen-welcome" class="min-h-screen flex items-center justify-center p-4 bg-slate-200">
+    <div class="max-w-xl w-full bg-white rounded-lg shadow-md border border-slate-300 overflow-hidden">
+      <div class="bg-blue-900 text-white p-6 border-b-4 border-emerald-600">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-laptop-code text-3xl text-emerald-400"></i>
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight">CBT PRACTICE PLATFORM</h1>
+            <p class="text-xs text-blue-200">Standard Computer-Based Test Prototype </p>
+          </div>
+        </div>
+      </div>
+
+      <form id="form-login" class="p-6 space-y-5">
+        
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Candidate Full Name</label>
+            <input type="text" id="input-candidate-name" placeholder="Abdulsamad adeyemii" required
+              class="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-sm">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">KWASERA number</label>
+            <input type="text" id="input-reg-num" placeholder="2026CBT001234" required
+              class="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-sm font-mono">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Examination Title</label>
+            <select id="select-exam" class="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-sm bg-white">
+              <option value="utme-2026"> Teacher Examination</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded border border-slate-200 grid grid-cols-3 gap-2 text-center text-xs">
+          <div class="p-2 bg-white rounded border border-slate-200">
+            <span class="block font-bold text-slate-500">SUBJECTS</span>
+            <span class="text-base font-bold text-blue-900">4 Subjects</span>
+          </div>
+          <div class="p-2 bg-white rounded border border-slate-200">
+            <span class="block font-bold text-slate-500">QUESTIONS</span>
+            <span class="text-base font-bold text-blue-900">80 questions</span>
+          </div>
+          <div class="p-2 bg-white rounded border border-slate-200">
+            <span class="block font-bold text-slate-500">DURATION</span>
+            <span class="text-base font-bold text-blue-900">120 Mins</span>
+          </div>
+          </div>
+
+        <button type="submit" 
+          class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded shadow transition duration-150 uppercase tracking-wide flex items-center justify-center space-x-2">
+          <span>Start Examination</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- MODAL: INSTRUCTIONS                       -->
+  <!-- ========================================== -->
+  <div id="modal-instructions" class="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-lg max-w-2xl w-full shadow-2xl border border-slate-300 overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="bg-blue-900 text-white p-4 flex justify-between items-center">
+        <h2 class="text-lg font-bold"><i class="fa-solid fa-clipboard-list mr-2 text-amber-400"></i>Examination Instructions</h2>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4 text-sm text-slate-700">
+        <p class="font-semibold text-slate-900">Please read the following rules carefully before beginning:</p>
+        <ol class="list-decimal list-inside space-y-2.5 bg-slate-50 p-4 rounded border border-slate-200">
+          <li>Read each question thoroughly before picking an option.</li>
+          <li>Select only <strong>one answer</strong> per question by clicking the option or pressing keys <kbd class="px-1.5 py-0.5 bg-slate-200 border rounded text-xs font-mono">A</kbd>-<kbd class="px-1.5 py-0.5 bg-slate-200 border rounded text-xs font-mono">D</kbd>.</li>
+          <li>You can navigate using the <kbd class="px-1.5 py-0.5 bg-slate-200 border rounded text-xs font-mono">N</kbd> (Next) and <kbd class="px-1.5 py-0.5 bg-slate-200 border rounded text-xs font-mono">P</kbd> (Previous) keys or the right sidebar panel.</li>
+          <li>Use <kbd class="px-1.5 py-0.5 bg-slate-200 border rounded text-xs font-mono">R</kbd> to flag/unflag questions you wish to review later.</li>
+          <li>Monitor your countdown timer at the top right. Once the timer reaches <strong>00:00:00</strong>, your test will submit automatically.</li>
+          <li>Do not close or refresh your browser tab during the examination.</li>
+        </ol>
+        <div class="p-3 bg-blue-50 text-blue-900 text-xs rounded border border-blue-200">
+          <i class="fa-solid fa-circle-info mr-1"></i> Starting the test will enter fullscreen mode if supported by your device.
+        </div>
+      </div>
+
+      <div class="p-4 bg-slate-100 border-t border-slate-200 flex justify-end space-x-3">
+        <button id="btn-cancel-instructions" class="px-4 py-2 border border-slate-300 rounded text-slate-700 hover:bg-slate-200 font-semibold text-xs uppercase">Back</button>
+        <button id="btn-begin-exam" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded font-bold text-xs uppercase shadow transition">I Have Read Instructions &mdash; Begin Test</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- MAIN EXAM SCREEN                           -->
+  <!-- ========================================== -->
+  <div id="screen-exam" class="hidden h-screen flex flex-col bg-slate-100 overflow-hidden">
+    <!-- Header Navigation -->
+    <header class="bg-blue-950 text-white shadow-md flex-none z-10">
+      <div class="flex items-center justify-between px-4 py-2 border-b border-blue-900">
+        <div class="flex items-center space-x-3">
+          <span class="font-black tracking-wider text-emerald-400 text-base">CBT<span class="text-white font-light">PRACTICE</span></span>
+          <span class="text-slate-400">|</span>
+          <span id="hdr-candidate-reg" class="text-xs font-mono text-slate-300">REG: ---</span>
+        </div>
+
+        <div class="flex items-center space-x-3">
+          <button id="btn-open-calc" title="Open Scientific Calculator"
+            class="px-3 py-1 bg-blue-800 hover:bg-blue-700 rounded text-xs font-semibold flex items-center space-x-1 border border-blue-600">
+            <i class="fa-solid fa-calculator text-amber-400"></i>
+            <span class="hidden sm:inline">Calculator</span>
+          </button>
+
+          <div id="timer-badge" class="px-3 py-1 bg-slate-900 text-emerald-400 font-mono font-bold text-sm rounded border border-slate-700 flex items-center space-x-2">
+            <i class="fa-regular fa-clock text-xs"></i>
+            <span id="timer-display">00:00:00</span>
+          </div>
+
+          <button id="btn-submit-exam" class="px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded uppercase tracking-wider shadow">
+            Submit
+          </button>
+        </div>
+      </div>
+
+      <!-- Subject Tabs Header -->
+      <div id="subject-tabs-container" class="flex overflow-x-auto bg-blue-900 text-xs">
+        <!-- Dynamic tabs rendered here -->
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex overflow-hidden">
+      <!-- Left / Center: Question Panel -->
+      <section class="flex-1 flex flex-col bg-white overflow-y-auto border-r border-slate-300">
+        <!-- Question Meta -->
+        <div class="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+          <div>
+            <span id="lbl-subject-name" class="font-bold text-blue-900 uppercase text-xs tracking-wider block">SUBJECT</span>
+            <h2 id="lbl-question-number" class="text-lg font-bold text-slate-800">Question 1</h2>
+          </div>
+          <span id="badge-question-status" class="text-xs px-2.5 py-1 rounded-full font-semibold bg-slate-200 text-slate-700">Unanswered</span>
+        </div>
+
+        <!-- Question Body & Options -->
+        <div class="p-6 flex-1 max-w-4xl space-y-6">
+          <div id="question-text" class="text-base text-slate-800 leading-relaxed font-medium">
+            Loading question text...
+          </div>
+
+          <div id="options-container" class="space-y-3 pt-2">
+            <!-- Options dynamically rendered here -->
+          </div>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <footer class="p-4 bg-slate-100 border-t border-slate-200 flex items-center justify-between">
+          <button id="btn-prev-q" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded font-bold text-xs uppercase flex items-center space-x-1.5 transition">
+            <i class="fa-solid fa-chevron-left"></i>
+            <span>Previous <kbd class="hidden sm:inline-block ml-1 opacity-60 font-mono">(P)</kbd></span>
+          </button>
+
+          <button id="btn-flag-q" class="px-4 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 rounded font-semibold text-xs uppercase flex items-center space-x-1.5 transition">
+            <i class="fa-solid fa-flag"></i>
+            <span id="btn-flag-text">Flag for Review <kbd class="hidden sm:inline-block ml-1 opacity-60 font-mono">(R)</kbd></span>
+          </button>
+
+          <button id="btn-next-q" class="px-5 py-2 bg-blue-900 hover:bg-blue-800 text-white rounded font-bold text-xs uppercase flex items-center space-x-1.5 transition">
+            <span>Next <kbd class="hidden sm:inline-block ml-1 opacity-60 font-mono">(N)</kbd></span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </footer>
+      </section>
+
+      <!-- Right Sidebar: Candidate Info & Question Navigator -->
+      <aside class="w-72 sm:w-80 bg-slate-50 flex-none flex flex-col h-full border-l border-slate-300">
+        <!-- Candidate Card -->
+        <div class="p-3 bg-white border-b border-slate-200 flex items-center space-x-3">
+          <div class="w-12 h-12 bg-slate-200 border border-slate-300 rounded flex items-center justify-center text-slate-500 font-bold text-lg flex-none">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="min-w-0 flex-1">
+            <h3 id="sidebar-candidate-name" class="font-bold text-slate-800 text-sm truncate">Candidate Name</h3>
+            <p id="sidebar-candidate-reg" class="text-xs text-slate-500 font-mono truncate">2026CBT001234</p>
+            <p class="text-[10px] text-blue-900 font-bold tracking-wide uppercase">Seat: A-023</p>
+          </div>
+        </div>
+
+        <!-- Progress Summary -->
+        <div class="p-3 bg-slate-100 border-b border-slate-200 space-y-2">
+          <div class="flex justify-between items-center text-xs font-semibold">
+            <span class="text-slate-600">Subject Progress</span>
+            <span id="sidebar-progress-text" class="text-blue-900">0 / 0</span>
+          </div>
+          <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+            <div id="sidebar-progress-bar" class="bg-emerald-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-1 pt-1 text-[11px] text-center font-semibold">
+            <div class="p-1 bg-emerald-50 text-emerald-800 rounded border border-emerald-200">
+              <span class="block text-[9px] uppercase text-emerald-600">Answered</span>
+              <span id="sidebar-count-answered">0</span>
+            </div>
+            <div class="p-1 bg-slate-200 text-slate-700 rounded border border-slate-300">
+              <span class="block text-[9px] uppercase text-slate-500">Unanswered</span>
+              <span id="sidebar-count-unanswered">0</span>
+            </div>
+            <div class="p-1 bg-amber-50 text-amber-800 rounded border border-amber-200">
+              <span class="block text-[9px] uppercase text-amber-600">Flagged</span>
+              <span id="sidebar-count-flagged">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question Grid Navigator Header -->
+        <div class="p-2 bg-slate-200 border-b border-slate-300 flex justify-between items-center text-xs font-bold text-slate-700">
+          <span>QUESTION NAVIGATION</span>
+          <i class="fa-solid fa-th"></i>
+        </div>
+
+        <!-- Question Grid -->
+        <div class="p-3 flex-1 overflow-y-auto">
+          <div id="question-grid" class="grid grid-cols-5 gap-2">
+            <!-- Question palette buttons rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Grid Legend -->
+        <div class="p-2 bg-white border-t border-slate-200 text-[10px] grid grid-cols-2 gap-1 text-slate-600">
+          <div class="flex items-center space-x-1">
+            <span class="w-3 h-3 bg-emerald-600 rounded-sm inline-block"></span>
+            <span>Answered</span>
+          </div>
+          <div class="flex items-center space-x-1">
+            <span class="w-3 h-3 bg-slate-200 border border-slate-400 rounded-sm inline-block"></span>
+            <span>Unanswered</span>
+          </div>
+          <div class="flex items-center space-x-1">
+            <span class="w-3 h-3 bg-blue-600 rounded-sm inline-block"></span>
+            <span>Current</span>
+          </div>
+          <div class="flex items-center space-x-1">
+            <span class="w-3 h-3 bg-amber-400 rounded-sm inline-block"></span>
+            <span>Flagged</span>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- MODAL: CALCULATOR                          -->
+  <!-- ========================================== -->
+  <div id="modal-calc" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 hidden pointer-events-none">
+    <div class="bg-slate-900 text-white rounded-lg shadow-2xl border border-slate-700 w-72 pointer-events-auto overflow-hidden">
+      <!-- Calculator Header -->
+      <div class="p-2 bg-slate-800 flex justify-between items-center cursor-move border-b border-slate-700">
+        <span class="text-xs font-bold text-slate-300"><i class="fa-solid fa-calculator mr-1"></i> Practice Calculator</span>
+        <button id="btn-close-calc" class="text-slate-400 hover:text-white text-xs px-2 py-0.5">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <!-- Calculator Screen -->
+      <div class="p-3 bg-slate-950 text-right">
+        <div id="calc-display" class="text-xl font-mono font-bold tracking-wider text-emerald-400 overflow-x-auto whitespace-nowrap scrollbar-none">0</div>
+      </div>
+      <!-- Calculator Grid -->
+      <div class="p-2 grid grid-cols-4 gap-1 text-xs">
+        <button class="calc-btn bg-rose-900/60 hover:bg-rose-800 text-rose-200 font-bold p-2.5 rounded" data-action="clear">C</button>
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 font-bold p-2.5 rounded" data-action="backspace"><i class="fa-solid fa-backspace"></i></button>
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 font-bold p-2.5 rounded" data-action="sqrt">&radic;</button>
+        <button class="calc-btn bg-amber-800/80 hover:bg-amber-700 font-bold p-2.5 rounded" data-action="op" data-val="/">&divide;</button>
+
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 p-2.5 rounded font-mono" data-action="num" data-val="7">7</button>
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 p-2.5 rounded font-mono" data-action="num" data-val="8">8</button>
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 p-2.5 rounded font-mono" data-action="num" data-val="9">9</button>
+        <button class="calc-btn bg-amber-800/80 hover:bg-amber-700 font-bold p-2.5 rounded" data-action="op" data-val="*">&times;</button>
+
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 p-2.5 rounded font-mono" data-action="num" data-val="4">4</button>
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 p-2.5 rounded font-mono" data-action="num" data-val="5">5</button>
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 p-2.5 rounded font-mono" data-action="num" data-val="6">6</button>
+        <button class="calc-btn bg-amber-800/80 hover:bg-amber-700 font-bold p-2.5 rounded" data-action="op" data-val="-">&minus;</button>
+
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 p-2.5 rounded font-mono" data-action="num" data-val="1">1</button>
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 p-2.5 rounded font-mono" data-action="num" data-val="2">2</button>
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 p-2.5 rounded font-mono" data-action="num" data-val="3">3</button>
+        <button class="calc-btn bg-amber-800/80 hover:bg-amber-700 font-bold p-2.5 rounded" data-action="op" data-val="+">+</button>
+
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 p-2.5 rounded font-mono" data-action="num" data-val="0">0</button>
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 p-2.5 rounded font-mono" data-action="num" data-val=".">.</button>
+        <button class="calc-btn bg-slate-800 hover:bg-slate-700 p-2.5 rounded font-mono" data-action="percent">%</button>
+        <button class="calc-btn bg-emerald-700 hover:bg-emerald-600 font-bold p-2.5 rounded" data-action="equals">=</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- MODAL: CONFIRM SUBMISSION                 -->
+  <!-- ========================================== -->
+  <div id="modal-confirm-submit" class="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-lg max-w-md w-full shadow-2xl border border-slate-300 overflow-hidden">
+      <div class="bg-rose-900 text-white p-4">
+        <h3 class="text-base font-bold"><i class="fa-solid fa-circle-exclamation mr-2"></i>Confirm Examination Submission</h3>
+      </div>
+
+      <div class="p-5 space-y-4 text-sm text-slate-700">
+        <p>Are you sure you want to finalize and submit your examination?</p>
+
+        <div class="bg-slate-50 border border-slate-200 rounded p-3 space-y-1.5 text-xs">
+          <div class="flex justify-between">
+            <span>Total Answered:</span>
+            <strong id="confirm-count-answered" class="text-emerald-700">0</strong>
+          </div>
+          <div class="flex justify-between">
+            <span>Total Unanswered:</span>
+            <strong id="confirm-count-unanswered" class="text-rose-700">0</strong>
+          </div>
+          <div class="flex justify-between">
+            <span>Total Flagged:</span>
+            <strong id="confirm-count-flagged" class="text-amber-700">0</strong>
+          </div>
+        </div>
+
+        <div id="confirm-unanswered-warning" class="p-3 bg-amber-50 border-l-4 border-amber-500 text-amber-900 text-xs rounded hidden">
+          <i class="fa-solid fa-triangle-exclamation mr-1"></i>
+          <strong>Warning:</strong> You still have unanswered questions!
+        </div>
+      </div>
+
+      <div class="p-4 bg-slate-100 border-t border-slate-200 flex justify-end space-x-3">
+        <button id="btn-cancel-submit" class="px-4 py-2 border border-slate-300 rounded text-slate-700 font-semibold text-xs uppercase hover:bg-slate-200">Continue Test</button>
+        <button id="btn-final-submit" class="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs uppercase rounded shadow">Yes, Submit Now</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- SCREEN 3: RESULT SCREEN                    -->
+  <!-- ========================================== -->
+  <div id="screen-result" class="hidden min-h-screen bg-slate-200 p-4 sm:p-8 flex items-center justify-center">
+    <div class="max-w-3xl w-full bg-white rounded-lg shadow-xl border border-slate-300 overflow-hidden">
+      <!-- Result Banner -->
+      <div class="bg-blue-900 text-white p-6 border-b-4 border-emerald-600 text-center">
+        <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl text-amber-400">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+        <h1 class="text-2xl font-bold">Examination Completed</h1>
+        <p class="text-xs text-blue-200 mt-1">Official Mock Examination Score Report</p>
+      </div>
+
+      <!-- Result Details -->
+      <div class="p-6 space-y-6">
+        <!-- Candidate Meta -->
+        <div class="bg-slate-50 p-4 rounded border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div><span class="text-slate-500 uppercase font-semibold">Candidate:</span> <strong id="res-candidate-name" class="text-slate-900 text-sm block">JOHN DOE</strong></div>
+          <div><span class="text-slate-500 uppercase font-semibold">Registration No:</span> <strong id="res-candidate-reg" class="text-slate-900 text-sm block font-mono">2026CBT001234</strong></div>
+          <div><span class="text-slate-500 uppercase font-semibold">Time Used:</span> <strong id="res-time-used" class="text-slate-900 text-sm block">00:00:00</strong></div>
+          <div><span class="text-slate-500 uppercase font-semibold">Status:</span> <strong class="text-emerald-700 text-sm block">Completed & Submitted</strong></div>
+        </div>
+
+        <!-- Overall Score Card -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+          <div class="p-3 bg-blue-50 border border-blue-200 rounded">
+            <span class="text-[10px] uppercase font-bold text-blue-700 block">Total Score</span>
+            <span id="res-total-score" class="text-xl font-black text-blue-900">0 / 40</span>
+          </div>
+          <div class="p-3 bg-emerald-50 border border-emerald-200 rounded">
+            <span class="text-[10px] uppercase font-bold text-emerald-700 block">Percentage</span>
+            <span id="res-percentage" class="text-xl font-black text-emerald-800">0%</span>
+          </div>
+          <div class="p-3 bg-teal-50 border border-teal-200 rounded">
+            <span class="text-[10px] uppercase font-bold text-teal-700 block">Correct</span>
+            <span id="res-correct" class="text-xl font-black text-teal-800">0</span>
+          </div>
+          <div class="p-3 bg-rose-50 border border-rose-200 rounded">
+            <span class="text-[10px] uppercase font-bold text-rose-700 block">Wrong / Unanswered</span>
+            <span id="res-wrong" class="text-xl font-black text-rose-800">0</span>
+          </div>
+        </div>
+
+        <!-- Subject Breakdown Table -->
+        <div>
+          <h3 class="text-xs font-bold uppercase text-slate-600 mb-2 tracking-wider">Subject Performance Breakdown</h3>
+          <div class="overflow-x-auto border border-slate-200 rounded">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-100 text-slate-700 uppercase font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="p-3">Subject</th>
+                  <th class="p-3 text-center">Questions</th>
+                  <th class="p-3 text-center">Correct</th>
+                  <th class="p-3 text-center">Score</th>
+                </tr>
+              </thead>
+              <tbody id="res-subject-breakdown" class="divide-y divide-slate-200">
+                <!-- Subject summary rows injected dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+          <button id="btn-review-answers" class="flex-1 py-2.5 bg-blue-900 hover:bg-blue-800 text-white font-bold text-xs uppercase rounded shadow transition flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Review Answers</span>
+          </button>
+          <button id="btn-restart-exam" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase rounded shadow transition flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-rotate-right"></i>
+            <span>Take Another Test</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- SCREEN 4: ANSWER REVIEW SCREEN             -->
+  <!-- ========================================== -->
+  <div id="screen-review" class="hidden min-h-screen flex flex-col bg-slate-100">
+    <header class="bg-blue-950 text-white p-4 flex justify-between items-center shadow-md">
+      <div>
+        <h1 class="text-base font-bold flex items-center space-x-2">
+          <i class="fa-solid fa-clipboard-check text-emerald-400"></i>
+          <span>Examination Answer Review</span>
+        </h1>
+        <p class="text-xs text-slate-300">Detailed breakdown of answers and corrections</p>
+      </div>
+      <button id="btn-back-to-results" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded text-slate-200 border border-slate-600">
+        <i class="fa-solid fa-arrow-left mr-1"></i> Back to Summary
+      </button>
+    </header>
+
+    <main class="flex-1 max-w-5xl w-full mx-auto p-4 space-y-4 overflow-y-auto">
+      <div id="review-subject-tabs" class="flex overflow-x-auto gap-2 border-b border-slate-300 pb-2">
+        <!-- Dynamic review subject filter tabs -->
+      </div>
+
+      <div id="review-questions-list" class="space-y-4 pb-8">
+        <!-- Questions with answers and status rendered dynamically -->
+      </div>
+    </main>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="question.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
